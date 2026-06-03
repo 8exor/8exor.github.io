@@ -1,0 +1,844 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dimpal Kumar — Full Stack & Web3 Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0A0E1A;
+    --bg2: #0F1629;
+    --bg3: #131c35;
+    --surface: #1a2340;
+    --border: rgba(59, 130, 246, 0.15);
+    --border2: rgba(59, 130, 246, 0.3);
+    --blue: #3B82F6;
+    --purple: #8B5CF6;
+    --teal: #14B8A6;
+    --text: #F8FAFC;
+    --muted: #94A3B8;
+    --faint: #475569;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 2px; }
+
+  /* SCROLL PROGRESS */
+  #progress-bar {
+    position: fixed; top: 0; left: 0; height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--purple));
+    width: 0%; z-index: 1000; transition: width 0.1s;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+    padding: 1rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(10,14,26,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.1rem;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--blue); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.85rem; font-weight: 400;
+    transition: color 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* SECTIONS */
+  section { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem; color: var(--blue);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700; line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    padding: 8rem 2rem 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem; color: var(--teal);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block; width: 2.5rem; height: 1px;
+    background: var(--teal);
+  }
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    font-weight: 800; line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+  }
+  .hero-name .highlight {
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-title {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    color: var(--muted); font-weight: 300;
+    margin-bottom: 2rem;
+    letter-spacing: 0.01em;
+  }
+  .hero-summary {
+    max-width: 580px;
+    color: var(--muted);
+    font-size: 1rem; line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    padding: 0.75rem 1.75rem;
+    background: var(--blue);
+    color: #fff; border: none;
+    border-radius: 6px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 500;
+    text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(59,130,246,0.35); }
+  .btn-outline {
+    padding: 0.75rem 1.75rem;
+    background: transparent;
+    color: var(--text); border: 1px solid var(--border2);
+    border-radius: 6px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 500;
+    text-decoration: none;
+    transition: transform 0.15s, border-color 0.15s;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-outline:hover { transform: translateY(-2px); border-color: var(--blue); }
+
+  .hero-stats {
+    display: flex; gap: 3rem;
+    margin-top: 4rem; padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.25rem; font-weight: 800;
+    color: var(--text);
+  }
+  .stat-num span { color: var(--blue); }
+  .stat-label { font-size: 0.8rem; color: var(--faint); margin-top: 0.2rem; }
+
+  /* BG GRID */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: -1;
+    background-image:
+      linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+  .hero-glow {
+    position: absolute; right: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+    pointer-events: none; z-index: -1;
+  }
+
+  /* ABOUT */
+  #about .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+    align-items: start;
+  }
+  .about-text { color: var(--muted); font-size: 1rem; line-height: 1.9; }
+  .about-text p + p { margin-top: 1rem; }
+  .about-highlights {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  }
+  .highlight-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .highlight-card:hover { border-color: var(--blue); transform: translateY(-3px); }
+  .highlight-card .icon {
+    font-size: 1.5rem; margin-bottom: 0.5rem;
+  }
+  .highlight-card .label {
+    font-size: 0.75rem; color: var(--faint);
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .highlight-card .value {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem; font-weight: 700; color: var(--text);
+    margin-top: 0.2rem;
+  }
+
+  /* SKILLS */
+  #skills .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  .skill-category {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+  .skill-category:hover { border-color: var(--border2); }
+  .skill-cat-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .skill-cat-title.frontend { color: var(--blue); }
+  .skill-cat-title.backend { color: var(--purple); }
+  .skill-cat-title.database { color: var(--teal); }
+  .skill-cat-title.devops { color: #f59e0b; }
+  .skill-cat-title.web3 { color: #ec4899; }
+  .skill-cat-title.tools { color: #34d399; }
+  .skills-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .pill {
+    padding: 0.3rem 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.8rem; color: var(--muted);
+    transition: all 0.15s;
+  }
+  .pill:hover { border-color: var(--blue); color: var(--text); }
+
+  /* EXPERIENCE */
+  #experience .timeline { position: relative; padding-left: 2rem; }
+  #experience .timeline::before {
+    content: '';
+    position: absolute; left: 0; top: 0.6rem; bottom: 0;
+    width: 1px; background: var(--border);
+  }
+  .timeline-item {
+    position: relative; margin-bottom: 3rem;
+  }
+  .timeline-dot {
+    position: absolute; left: -2rem;
+    top: 0.45rem;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--blue);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+    transform: translateX(-4.5px);
+  }
+  .exp-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .exp-role {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.15rem; font-weight: 700;
+  }
+  .exp-company {
+    font-size: 0.9rem; color: var(--blue);
+    margin-top: 0.15rem;
+  }
+  .exp-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem; color: var(--faint);
+    white-space: nowrap;
+  }
+  .exp-desc { color: var(--muted); font-size: 0.92rem; line-height: 1.8; }
+  .exp-desc li { margin-bottom: 0.4rem; margin-left: 1.2rem; }
+
+  /* PROJECTS */
+  #projects .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--purple));
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .project-card:hover { border-color: var(--border2); transform: translateY(-4px); }
+  .project-card:hover::before { opacity: 1; }
+  .project-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem; font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .project-desc {
+    color: var(--muted); font-size: 0.88rem;
+    line-height: 1.7; margin-bottom: 1rem;
+  }
+  .project-techs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; }
+  .tech-tag {
+    padding: 0.2rem 0.6rem;
+    background: rgba(59,130,246,0.1);
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem; color: var(--blue);
+  }
+
+  /* EDUCATION & EXTRAS */
+  .info-row {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+  }
+  .info-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .info-card .ic-top {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem; color: var(--faint);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+  .info-card .ic-main {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem; font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  .info-card .ic-sub { color: var(--muted); font-size: 0.85rem; }
+
+  /* CONTACT */
+  #contact {
+    text-align: center;
+    background: var(--bg2);
+    border-radius: 16px;
+    padding: 5rem 2rem;
+    border: 1px solid var(--border);
+    max-width: 700px;
+    margin: 0 auto 6rem;
+  }
+  #contact .contact-links {
+    display: flex; flex-wrap: wrap;
+    justify-content: center; gap: 1rem;
+    margin-top: 2rem;
+  }
+  .contact-link {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text); text-decoration: none;
+    font-size: 0.9rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .contact-link:hover { border-color: var(--blue); transform: translateY(-2px); }
+  .contact-link svg { width: 16px; height: 16px; opacity: 0.7; }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 2rem;
+    color: var(--faint); font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* BACK TO TOP */
+  #btt {
+    position: fixed; bottom: 2rem; right: 2rem;
+    width: 40px; height: 40px;
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 800;
+    opacity: 0; transform: translateY(10px);
+    transition: opacity 0.3s, transform 0.3s;
+    color: var(--blue);
+  }
+  #btt.visible { opacity: 1; transform: translateY(0); }
+  #btt:hover { background: var(--border2); }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    #about .about-grid { grid-template-columns: 1fr; }
+    .about-highlights { grid-template-columns: 1fr 1fr; }
+    .hero-stats { gap: 2rem; }
+    .nav-links { display: none; }
+    .exp-header { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav>
+  <a href="#hero" class="nav-logo">Dimpal Kumar<span>.dev</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:dimpalkbhardwaj@gmail.com" class="btn-primary" style="padding:0.5rem 1.25rem; font-size:0.82rem;">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<div style="position:relative; overflow:hidden;">
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-eyebrow fade-up">Available for work</div>
+  <h1 class="hero-name fade-up" style="transition-delay:0.1s">
+    <span class="highlight">Dimpal</span><br>Kumar
+  </h1>
+  <p class="hero-title fade-up" style="transition-delay:0.2s">Full Stack Developer &amp; Web3 Engineer</p>
+  <p class="hero-summary fade-up" style="transition-delay:0.3s">
+    Building scalable web applications and decentralized platforms with 3+ years of experience across Node.js, React, Vue, blockchain protocols, and cloud infrastructure.
+  </p>
+  <div class="hero-ctas fade-up" style="transition-delay:0.4s">
+    <a href="#projects" class="btn-primary">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      View Projects
+    </a>
+    <a href="#contact" class="btn-outline">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+      Contact Me
+    </a>
+    <a href="https://www.linkedin.com/in/dimpalbhardwaj" target="_blank" class="btn-outline">
+      LinkedIn
+    </a>
+  </div>
+
+  <div class="hero-stats fade-up" style="transition-delay:0.5s">
+    <div>
+      <div class="stat-num">3<span>+</span></div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div>
+      <div class="stat-num">2.5<span>+</span></div>
+      <div class="stat-label">Years Web3</div>
+    </div>
+    <div>
+      <div class="stat-num">3</div>
+      <div class="stat-label">Blockchains Deployed</div>
+    </div>
+    <div>
+      <div class="stat-num">10<span>+</span></div>
+      <div class="stat-label">Projects Delivered</div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label fade-up">01 — About</p>
+  <h2 class="section-title fade-up">Who I Am</h2>
+  <div class="about-grid">
+    <div class="about-text fade-up">
+      <p>I'm Dimpal Kumar, a full-stack developer and blockchain engineer based in Mohali, India. With over 4 years of professional development experience — including 3.5 years focused on Web3 — I've shipped production-grade applications across fintech, DeFi, e-commerce, and enterprise domains.</p>
+      <p>At LBM Solutions, I led blockchain integration efforts building dApps, smart contracts, and crypto payment gateways. As a freelancer, I've delivered end-to-end token presale platforms and DeFi protocols for clients across global markets.</p>
+      <p>Before software, I served as a Junior/Assistant Engineer at Gabriel India Ltd. for 4.5 years and as a Corporal in the NCC — experiences that shaped my discipline, leadership, and systematic approach to problem-solving.</p>
+    </div>
+    <div class="about-highlights fade-up" style="transition-delay:0.15s">
+      <div class="highlight-card">
+        <div class="icon">🌐</div>
+        <div class="label">Expertise</div>
+        <div class="value">Full Stack + Web3</div>
+      </div>
+      <div class="highlight-card">
+        <div class="icon">⛓️</div>
+        <div class="label">Chains</div>
+        <div class="value">ETH · BSC · Polygon</div>
+      </div>
+      <div class="highlight-card">
+        <div class="icon">☁️</div>
+        <div class="label">Cloud</div>
+        <div class="value">AWS + Docker</div>
+      </div>
+      <div class="highlight-card">
+        <div class="icon">📍</div>
+        <div class="label">Location</div>
+        <div class="value">Mohali, India</div>
+      </div>
+      <div class="highlight-card" style="grid-column: span 2;">
+        <div class="icon">🗣️</div>
+        <div class="label">Languages</div>
+        <div class="value">Hindi · English · Punjabi</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label fade-up">02 — Skills</p>
+  <h2 class="section-title fade-up">Technical Arsenal</h2>
+  <div class="skills-grid">
+    <div class="skill-category fade-up">
+      <div class="skill-cat-title frontend">Frontend</div>
+      <div class="skills-pills">
+        <span class="pill">Vue.js</span>
+        <span class="pill">React.js</span>
+        <span class="pill">Next.js</span>
+        <span class="pill">JavaScript</span>
+        <span class="pill">HTML5</span>
+        <span class="pill">CSS3</span>
+        <span class="pill">Tailwind CSS</span>
+      </div>
+    </div>
+    <div class="skill-category fade-up" style="transition-delay:0.05s">
+      <div class="skill-cat-title backend">Backend</div>
+      <div class="skills-pills">
+        <span class="pill">Node.js</span>
+        <span class="pill">Express.js</span>
+        <span class="pill">PHP</span>
+        <span class="pill">Laravel</span>
+        <span class="pill">REST APIs</span>
+        <span class="pill">JWT</span>
+        <span class="pill">OAuth 2.0</span>
+        <span class="pill">GraphQL</span>
+        <span class="pill">RabbitMQ</span>
+      </div>
+    </div>
+    <div class="skill-category fade-up" style="transition-delay:0.1s">
+      <div class="skill-cat-title database">Database</div>
+      <div class="skills-pills">
+        <span class="pill">MySQL</span>
+        <span class="pill">MongoDB</span>
+        <span class="pill">Redis</span>
+        <span class="pill">PostgreSQL</span>
+      </div>
+    </div>
+    <div class="skill-category fade-up" style="transition-delay:0.15s">
+      <div class="skill-cat-title devops">Cloud &amp; DevOps</div>
+      <div class="skills-pills">
+        <span class="pill">AWS</span>
+        <span class="pill">Docker</span>
+        <span class="pill">Jenkins</span>
+        <span class="pill">Nginx</span>
+        <span class="pill">FCM</span>
+      </div>
+    </div>
+    <div class="skill-category fade-up" style="transition-delay:0.2s">
+      <div class="skill-cat-title web3">Web3 &amp; Blockchain</div>
+      <div class="skills-pills">
+        <span class="pill">Solidity</span>
+        <span class="pill">Ethereum</span>
+        <span class="pill">BSC</span>
+        <span class="pill">Polygon</span>
+        <span class="pill">Solana</span>
+        <span class="pill">Web3.js</span>
+        <span class="pill">Ethers.js</span>
+        <span class="pill">MetaMask</span>
+        <span class="pill">WalletConnect</span>
+        <span class="pill">ERC/BEP-20</span>
+      </div>
+    </div>
+    <div class="skill-category fade-up" style="transition-delay:0.25s">
+      <div class="skill-cat-title tools">Tools &amp; CMS</div>
+      <div class="skills-pills">
+        <span class="pill">Git</span>
+        <span class="pill">GitHub</span>
+        <span class="pill">Postman</span>
+        <span class="pill">WordPress</span>
+        <span class="pill">Shopify</span>
+        <span class="pill">AutoCAD</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label fade-up">03 — Experience</p>
+  <h2 class="section-title fade-up">Career Timeline</h2>
+  <div class="timeline">
+
+    <div class="timeline-item fade-up">
+      <div class="timeline-dot"></div>
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Full Stack Freelancer</div>
+          <div class="exp-company">Independent / Remote</div>
+        </div>
+        <div class="exp-date">Feb 2025 — Present</div>
+      </div>
+      <ul class="exp-desc">
+        <li>Delivered blockchain-based solutions for $Helder, Qerra, Pandx and many other tokens, including smart contracts with staking, vesting, referral, and burn mechanisms.</li>
+        <li>Developed secure token presale contracts and liquidity lock modules on BSC, Polygon, and Solana.</li>
+        <li>Built full-stack DApps and real-time dashboards using React, Vue, Node.js, and Web3 integrations like MetaMask and BscScan APIs.</li>
+        <li>Specialized in Solidity (ERC/BEP-20) and smart contract deployment and auditing.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item fade-up" style="transition-delay:0.1s">
+      <div class="timeline-dot" style="background:var(--purple)"></div>
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Full Stack Developer</div>
+          <div class="exp-company">LBM Solutions Pvt. Ltd.</div>
+        </div>
+        <div class="exp-date">Jan 2022 — Feb 2025</div>
+      </div>
+      <ul class="exp-desc">
+        <li>Developed and maintained scalable web applications using Node.js, Vue.js, and React.js for enterprise clients.</li>
+        <li>Designed RESTful APIs and integrated blockchain solutions for secure decentralized applications.</li>
+        <li>Built and deployed smart contracts on Ethereum, BSC, and Polygon using Solidity.</li>
+        <li>Delivered dApps, crypto payment gateways, and NFT marketplaces with WalletConnect and MetaMask integration.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item fade-up" style="transition-delay:0.2s">
+      <div class="timeline-dot" style="background:var(--teal)"></div>
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Junior / Assistant Engineer</div>
+          <div class="exp-company">Gabriel India Ltd.</div>
+        </div>
+        <div class="exp-date">~2017 — 2021 (4.5 years)</div>
+      </div>
+      <ul class="exp-desc">
+        <li>Managed tool room operations including tool design, procurement, and maintenance.</li>
+        <li>Designed tools using AutoCAD and maintained documentation with MS Office.</li>
+        <li>Improved operational efficiency and ensured smooth machine maintenance across manufacturing lines.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label fade-up">04 — Projects</p>
+  <h2 class="section-title fade-up">Featured Work</h2>
+  <div class="projects-grid">
+
+    <div class="project-card fade-up">
+      <div class="project-name">$Helder Token Platform</div>
+      <p class="project-desc">Full DeFi platform featuring staking, vesting schedules, referral rewards, and token burn mechanics. Includes a real-time dashboard for holders to track positions.</p>
+      <div class="project-techs">
+        <span class="tech-tag">Solidity</span>
+        <span class="tech-tag">Next.js</span>
+        <span class="tech-tag">ethers</span>
+        <span class="tech-tag">BSC</span>
+        <span class="tech-tag">Node.js</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-up" style="transition-delay:0.05s">
+      <div class="project-name">Qerra Token Presale</div>
+      <p class="project-desc">Secure token presale smart contract with liquidity lock modules. Handled fundraising logic, whitelist management, and post-sale distribution mechanics.</p>
+      <div class="project-techs">
+        <span class="tech-tag">Solidity</span>
+        <span class="tech-tag">ERC-20</span>
+        <span class="tech-tag">Vue.js</span>
+        <span class="tech-tag">Ethers.js</span>
+        <span class="tech-tag">Polygon</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-up" style="transition-delay:0.1s">
+      <div class="project-name">Crypto Payment Gateway</div>
+      <p class="project-desc">Multi-chain crypto payment gateway supporting Ethereum, BSC, and Polygon. Integrated WalletConnect and MetaMask for seamless UX across wallets.</p>
+      <div class="project-techs">
+        <span class="tech-tag">WalletConnect</span>
+        <span class="tech-tag">MetaMask</span>
+        <span class="tech-tag">Node.js</span>
+        <span class="tech-tag">React</span>
+        <span class="tech-tag">MySQL</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-up" style="transition-delay:0.15s">
+      <div class="project-name">Decentralized Marketplace</div>
+      <p class="project-desc">NFT and token marketplace built on top of smart contracts, enabling peer-to-peer trading with on-chain settlement and off-chain metadata via IPFS.</p>
+      <div class="project-techs">
+        <span class="tech-tag">Solidity</span>
+        <span class="tech-tag">Vue.js</span>
+        <span class="tech-tag">MongoDB</span>
+        <span class="tech-tag">Docker</span>
+        <span class="tech-tag">AWS</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-up" style="transition-delay:0.2s">
+      <div class="project-name">Enterprise Web Applications</div>
+      <p class="project-desc">Suite of scalable B2B web apps built at LBM Solutions — covering dashboards, CRMs, and reporting tools with real-time data pipelines using Redis and RabbitMQ.</p>
+      <div class="project-techs">
+        <span class="tech-tag">Node.js</span>
+        <span class="tech-tag">Vue.js</span>
+        <span class="tech-tag">Redis</span>
+        <span class="tech-tag">RabbitMQ</span>
+        <span class="tech-tag">Jenkins</span>
+      </div>
+    </div>
+
+    <div class="project-card fade-up" style="transition-delay:0.25s">
+      <div class="project-name">Solana DApp Integration</div>
+      <p class="project-desc">Extended client blockchain portfolio to Solana — building token deployment scripts, wallet connectivity, and transaction monitoring dashboards for a DeFi client.</p>
+      <div class="project-techs">
+        <span class="tech-tag">Solana</span>
+        <span class="tech-tag">Web3.js</span>
+        <span class="tech-tag">React</span>
+        <span class="tech-tag">Node.js</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EDUCATION + VOLUNTEERING -->
+<section id="education" style="padding-top:2rem;">
+  <p class="section-label fade-up">05 — Background</p>
+  <h2 class="section-title fade-up">Education &amp; Service</h2>
+  <div class="info-row">
+    <div class="info-card fade-up">
+      <div class="ic-top">🎓 Education</div>
+      <div class="ic-main">3-Year Diploma — Electrical Engineering</div>
+      <div class="ic-sub">Govt. Polytechnic Hamirpur · Aug 2013 – Jul 2016</div>
+    </div>
+    <div class="info-card fade-up" style="transition-delay:0.1s">
+      <div class="ic-top">🪖 Volunteering</div>
+      <div class="ic-main">Corporal — National Cadet Corps (NCC)</div>
+      <div class="ic-sub">3 years · Two army camps · Leadership &amp; team-building activities</div>
+    </div>
+    <div class="info-card fade-up" style="transition-delay:0.2s">
+      <div class="ic-top">🏆 Soft Skills</div>
+      <div class="ic-main">Leadership · Collaboration</div>
+      <div class="ic-sub">Adaptability · Cross-functional teamwork</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section style="padding:4rem 2rem 2rem; max-width:1100px; margin:0 auto;">
+  <div id="contact" class="fade-up">
+    <p class="section-label" style="display:inline-block; margin-bottom:0.5rem;">06 — Contact</p>
+    <h2 class="section-title" style="margin-bottom:0.75rem;">Let's Build Together</h2>
+    <p style="color:var(--muted); font-size:1rem; max-width:440px; margin:0 auto;">
+      Open to full-time roles, contract work, and Web3 projects. Reach out and let's talk.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:dimpalkbhardwaj@gmail.com" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+        dimpalkbhardwaj@gmail.com
+      </a>
+      <a href="tel:+918988365868" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.09 2 2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91A16 16 0 0016.09 17.91l1.19-1.19a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        +91 898 836 5868
+      </a>
+      <a href="https://www.linkedin.com/in/dimpalbhardwaj" target="_blank" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/8exor" target="_blank" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Built with precision · Dimpal Kumar &copy; 2025 · Full Stack &amp; Web3 Developer</p>
+</footer>
+
+<div id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+</div>
+
+<script>
+  // Scroll progress
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    document.getElementById('progress-bar').style.width = pct + '%';
+    const btt = document.getElementById('btt');
+    if (h.scrollTop > 400) btt.classList.add('visible');
+    else btt.classList.remove('visible');
+  });
+
+  // Intersection observer for fade-up
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Trigger hero items immediately
+  setTimeout(() => {
+    document.querySelectorAll('#hero .fade-up').forEach(el => el.classList.add('visible'));
+  }, 100);
+</script>
+</body>
+</html>
